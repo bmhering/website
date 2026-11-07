@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Benedikt Hering</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Benedikt Magnus Hering, Software Engineer aus Stuttgart. C#, ASP.NET Core, Blazor. Freelance für kleine und mittlere Projekte, remote.">
+<meta name="author" content="Benedikt Magnus Hering">
+<meta name="theme-color" content="#111113">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Benedikt Hering, Software Engineer">
+<meta property="og:description" content="C#, ASP.NET Core &amp; Blazor. Freelance für kleine und mittlere Projekte, remote.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23111113'/%3E%3Cpolyline points='14,20 27,32 14,44' fill='none' stroke='%23f5f5f2' stroke-width='6' stroke-linecap='square'/%3E%3Crect x='32' y='40' width='20' height='6' fill='%23f5f5f2'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Benedikt Magnus Hering","jobTitle":"Software Engineer","address":{"@type":"PostalAddress","addressLocality":"Stuttgart","addressCountry":"DE"},"knowsAbout":["C#","ASP.NET Core","Blazor","Entity Framework Core","Docker","Kubernetes"],"sameAs":["https://www.linkedin.com/in/benedikt-magnus-hering-302bb816a"]}
+</script>
+<style>
+/* Schrift lokal gehostet (DSGVO): IBM Plex Mono, SIL Open Font License, siehe fonts/OFL-LICENSE.txt */
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/ibm-plex-mono-latin-700-normal.woff2) format("woff2")}
+/* Layout: eine Terminal-Sitzung mit zwei Hauptdarstellern, der Shell (oben) und dem git-Verlauf. Alles andere bleibt leise. */
+:root{
+  --bg:#111113; --bg-2:#18181b; --fg:#c9c8c3; --bright:#f5f5f2; --dim:#7d7c78; --line:#2a2a2f;
+  --on-bright:#111113; --ok:#7fd18b;
+  --mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --maxw:920px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:15px;line-height:1.65;font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+::selection{background:var(--bright);color:var(--on-bright)}
+:focus-visible{outline:2px solid var(--bright);outline-offset:2px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+table.sr{display:block;max-width:1px}
+.cur{display:inline-block;width:.6em;height:1.1em;background:var(--bright);vertical-align:-.18em;animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* [ bracket ] buttons */
+.br{font:inherit;font-size:13px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:var(--fg);background:none;border:0;cursor:pointer;padding:4px 2px;white-space:nowrap}
+.br::before{content:"[ ";color:var(--dim)}
+.br::after{content:" ]";color:var(--dim)}
+.br:hover{color:var(--bright)}
+.br.solid{background:var(--bright);color:var(--on-bright);padding:6px 10px}
+.br.solid::before,.br.solid::after{color:var(--on-bright)}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px dashed var(--line)}
+.top .row{display:flex;align-items:center;justify-content:space-between;gap:8px 18px;flex-wrap:wrap;padding-block:12px}
+.mark{font-weight:700;font-size:14px;letter-spacing:.08em;text-decoration:none;color:var(--bright);white-space:nowrap}
+.top nav{display:flex;gap:2px 12px;flex-wrap:wrap;align-items:center}
+
+/* hero */
+.hero{padding-block:56px 0}
+.kicker{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+h1{color:var(--bright);font-size:clamp(1.6rem,4.6vw,2.6rem);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin-top:14px;text-wrap:balance}
+.lede{color:var(--fg);max-width:60ch;margin-top:16px}
+.cta{display:flex;gap:10px 18px;flex-wrap:wrap;margin-top:24px;align-items:center}
+
+/* shell (the star) */
+.shell{margin-top:40px;border:1px solid var(--line);background:var(--bg-2)}
+.shell .bar{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--dim);padding:8px 14px;border-bottom:1px solid var(--line)}
+.shell .out{font:inherit;font-size:13.5px;line-height:1.6;padding:16px 14px 6px;max-height:540px;overflow:auto;white-space:pre-wrap;word-break:break-word;min-width:0}
+.shell .out .nf{white-space:pre;overflow-x:auto;word-break:normal;line-height:1.35}
+.shell .out .nf.stack{white-space:pre-wrap;word-break:break-word}
+.shell .out .b{color:var(--bright);font-weight:500}
+.shell .out .d{color:var(--dim)}
+.shell .out .ok{color:var(--ok)}
+.shell .chips{display:flex;flex-wrap:wrap;gap:2px 12px;padding:4px 14px 10px}
+.shell .chips .br{font-size:12px;text-transform:none;letter-spacing:0;padding:3px 7px}
+.shell .chips .br.sel{background:var(--bright);color:var(--on-bright)}
+.shell .chips .br.sel::before,.shell .chips .br.sel::after{color:var(--on-bright)}
+.shell form{display:flex;gap:8px;align-items:center;border-top:1px solid var(--line);padding:11px 14px}
+.shell label{color:var(--bright);white-space:nowrap;font-size:13.5px}
+.shell input{flex:1;min-width:0;font:inherit;font-size:14px;color:var(--bright);background:transparent;border:0;outline:0;caret-color:var(--bright)}
+.hint{font-size:12px;color:var(--dim);margin-top:10px}
+.hint kbd{font:inherit;border:1px solid var(--line);padding:0 5px}
+
+/* sections */
+section.sec{padding-block:80px 0}
+.h{display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap;margin-bottom:8px}
+.h h2{color:var(--bright);font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.h .cmd{font-size:13px;color:var(--dim)}
+.h .cmd::before{content:"$ "}
+.sub{color:var(--dim);font-size:13px;margin-bottom:22px}
+
+/* git graph */
+.graph{font-size:14px;line-height:1.6}
+.gl{display:block}
+.gl > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:4ch 1fr;padding:5px 0}
+.gl > summary::-webkit-details-marker{display:none}
+.gl > summary:hover .tt{color:var(--bright);text-decoration:underline;text-underline-offset:3px}
+.gr,.gx{color:var(--bright);white-space:pre}
+.ln{display:flex;flex-wrap:wrap;gap:0 10px;min-width:0}
+.hs{color:var(--dim)} .rf{color:var(--ok)} .dt{color:var(--dim)} .tt{color:var(--fg)}
+.gl[open] .tt{color:var(--bright);font-weight:500}
+.gx-row{display:grid;grid-template-columns:4ch 1fr}
+.show{display:grid;grid-template-columns:4ch 1fr;padding:2px 0 16px}
+.show .rail{color:var(--line);white-space:pre}
+.show .body{min-width:0;border-left:1px dashed var(--line);padding:4px 0 4px 14px;font-size:14px}
+.show .kv{color:var(--dim);font-size:13px}
+.show p{max-width:66ch;margin-top:8px}
+.show .tags{margin-top:10px;font-size:12.5px;color:var(--dim);display:flex;flex-wrap:wrap;gap:2px 14px}
+.show .tags span::before{content:"+ ";color:var(--ok)}
+
+/* stack */
+pre.ascii{font:inherit;font-size:13.5px;line-height:1.55;white-space:pre;overflow-x:auto;min-width:0}
+pre.ascii .hd{color:var(--bright);font-weight:500}
+.st-stable{color:var(--ok)} .st-active{color:var(--bright)} .st-preview{color:var(--dim)}
+.extra{margin-top:20px;display:grid;gap:4px;font-size:13.5px;color:var(--dim)}
+.extra b{color:var(--fg);font-weight:500}
+
+/* contact */
+.mail{color:var(--bright);font-size:clamp(1.1rem,3.6vw,1.9rem);font-weight:700;word-break:break-all;line-height:1.3;margin-top:14px}
+.mail a{text-decoration:none}
+.mail a:hover{text-decoration:underline;text-underline-offset:4px}
+.clines{display:grid;gap:4px;color:var(--dim);margin-top:18px}
+.clines b{color:var(--fg);font-weight:500}
+
+footer{margin-top:96px;border-top:1px dashed var(--line)}
+footer .row{display:flex;justify-content:space-between;align-items:center;gap:8px 20px;flex-wrap:wrap;padding-block:20px calc(20px + env(safe-area-inset-bottom,0px));font-size:12.5px;color:var(--dim)}
+footer .br{font-size:12px}
+
+@media(prefers-reduced-motion:reduce){.cur{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap row">
+    <a class="mark" href="#top">BENEDIKT.HERING<span class="cur" aria-hidden="true"></span></a>
+    <nav aria-label="Navigation">
+      <a class="br" href="#log">log</a>
+      <a class="br" href="#stack">stack</a>
+      <a class="br" href="#kontakt" data-en="contact">kontakt</a>
+      <button class="br" id="langBtn" type="button" aria-label="Switch to English">EN</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker" data-en="Benedikt Magnus Hering · Software Engineer · Stuttgart, Germany · remote">Benedikt Magnus Hering · Software Engineer · Stuttgart, Germany · remote</div>
+    <h1 data-en="I build web applications with C# and .NET.">Ich baue Webanwendungen mit C# und .NET.</h1>
+    <p class="lede" data-en="Full-time software engineer in private health insurance. Alongside that I take on small and mid-sized projects, from websites to web applications, deliberately outside the insurance industry.">Hauptberuflich Software Engineer in der privaten Krankenversicherung. Daneben übernehme ich kleine und mittlere Projekte, von der Website bis zur Webanwendung, bewusst außerhalb der Versicherungsbranche.</p>
+    <div class="cta">
+      <a class="br solid" href="#kontakt" data-en="send mail">mail schreiben</a>
+      <a class="br" href="#log" data-en="read git log">git log lesen</a>
+    </div>
+
+    <div class="shell" id="shell">
+      <div class="bar"><span>guest@benedikt: ~</span><span>zsh</span></div>
+      <div class="out" id="out" role="log" aria-live="polite"></div>
+      <div class="chips" aria-label="Befehle">
+        <button class="br" type="button" data-cmd="services">services</button>
+        <button class="br" type="button" data-cmd="process">process</button>
+        <button class="br" type="button" data-cmd="stack">stack</button>
+        <button class="br" type="button" data-cmd="contact">contact</button>
+        <button class="br" type="button" data-cmd="help">help</button>
+      </div>
+      <form id="shellForm" autocomplete="off">
+        <label for="cmd">guest@benedikt:~$</label>
+        <input id="cmd" name="cmd" type="text" spellcheck="false" autocapitalize="off" aria-label="Befehl eingeben">
+      </form>
+    </div>
+    <p class="hint" data-en="&lt;kbd&gt;←&lt;/kbd&gt; &lt;kbd&gt;→&lt;/kbd&gt; choose a command, &lt;kbd&gt;Enter&lt;/kbd&gt; runs it. Or type your own: &lt;kbd&gt;↑&lt;/kbd&gt; repeats, &lt;kbd&gt;Tab&lt;/kbd&gt; completes.">Mit <kbd>←</kbd> <kbd>→</kbd> einen Befehl wählen, <kbd>Enter</kbd> führt ihn aus. Oder selbst tippen: <kbd>↑</kbd> wiederholt, <kbd>Tab</kbd> vervollständigt.</p>
+  </div>
+</section>
+
+<section class="sec" id="log">
+  <div class="wrap">
+    <div class="h"><h2 data-en="Career">Werdegang</h2><span class="cmd">git log --graph</span></div>
+    <p class="sub" data-en="Click a line for details.">Klick eine Zeile für Details.</p>
+
+    <div class="graph">
+      <details class="gl" open>
+        <summary><span class="gr">*</span><span class="ln"><span class="hs">a91f3c2</span><span class="rf">(HEAD -&gt; main)</span><span class="dt">2025-04</span><span class="tt">Software Engineer · Hallesche / ALH</span></span></summary>
+        <div class="show"><span class="rail">|</span><div class="body">
+          <div class="kv" data-en="Date: 04/2025 → now · full-time">Date: 04/2025 → heute · Festanstellung</div>
+          <p data-en="Microservices and Blazor frontends in regulated private health insurance, on PostgreSQL and IBM Db2 for z/OS. Own services from design to production, contributing to architecture decisions: monolith, modular monolith or microservices.">Microservices und Blazor-Frontends in der regulierten privaten Krankenversicherung, auf PostgreSQL und IBM Db2 for z/OS. Eigene Services vom Entwurf bis in Produktion, Mitarbeit an Architekturentscheidungen: Monolith, modularer Monolith oder Microservices.</p>
+          <p data-en="Releases and production operations with Azure DevOps, Docker, Kubernetes, Rancher and Grafana, including incidents. Standardised dev environments (WSL, Dev Containers) and internal training on AI-assisted development.">Releases und Produktionsbetrieb mit Azure DevOps, Docker, Kubernetes, Rancher und Grafana, inklusive Incidents. Standardisierte Entwicklungsumgebungen (WSL, Dev Containers) und interne Schulungen zu AI-assisted Development.</p>
+          <div class="tags"><span>C#</span><span>ASP.NET Core</span><span>Blazor</span><span>EF Core</span><span>Kubernetes</span><span>Rancher</span><span>Grafana</span></div>
+        </div></div>
+      </details>
+
+      <details class="gl">
+        <summary><span class="gr">*</span><span class="ln"><span class="hs">5d20e7b</span><span class="dt">2024-04</span><span class="tt">Junior Software Engineer · Hallesche / ALH</span></span></summary>
+        <div class="show"><span class="rail">|</span><div class="body">
+          <div class="kv" data-en="Date: 04/2024 → 03/2025 · full-time">Date: 04/2024 → 03/2025 · Festanstellung</div>
+          <p data-en="Replaced a legacy core-insurance system with C#, ASP.NET Core and Blazor, system by system with periods of parallel operation. The hard part: sequencing the migration around intertwined dependencies. Covered by unit, mock and end-to-end tests.">Ablösung eines Legacy-Systems der Kernversicherung durch C#, ASP.NET Core und Blazor, System für System mit Phasen des Parallelbetriebs. Die eigentliche Arbeit: die Migration entlang verflochtener Abhängigkeiten richtig zu sequenzieren. Abgesichert mit Unit-, Mock- und End-to-End-Tests.</p>
+          <div class="tags"><span>Blazor</span><span>xUnit</span><span>NSubstitute</span><span>Playwright</span></div>
+        </div></div>
+      </details>
+
+      <details class="gl">
+        <summary><span class="gr">*</span><span class="ln"><span class="hs">0c7a11e</span><span class="dt">2023-10</span><span class="tt">Software Engineering Trainee · Hallesche / ALH</span></span></summary>
+        <div class="show"><span class="rail">|</span><div class="body">
+          <div class="kv" data-en="Date: 10/2023 → 03/2024 · full-time">Date: 10/2023 → 03/2024 · Festanstellung</div>
+          <p data-en="Scheduler for the automated detection and cleanup of faulty records. Move to the carrier side and start with C# and .NET.">Scheduler zur automatisierten Erkennung und Bereinigung fehlerhafter Datensätze. Wechsel auf die Versichererseite und Einstieg in C# und .NET.</p>
+          <div class="tags"><span>C#</span><span>.NET</span></div>
+        </div></div>
+      </details>
+
+      <details class="gl">
+        <summary><span class="gr">| *</span><span class="ln"><span class="hs">3e8b9f4</span><span class="rf">(freelance)</span><span class="dt">2023-09</span><span class="tt" data-en="Self-employed · Benedikt Hering Softwareentwicklung">Selbstständig · Benedikt Hering Softwareentwicklung</span></span></summary>
+        <div class="show"><span class="rail">| |</span><div class="body">
+          <div class="kv" data-en="Date: 09/2023 → now · part-time, remote">Date: 09/2023 → heute · nebenberuflich, remote</div>
+          <p data-en="Small and mid-sized projects alongside my full-time job, deliberately outside the insurance industry. For example: software consulting for small companies in mortgage finance, from requirements to implementation, as the only technical contact.">Kleine und mittlere Projekte neben der Festanstellung, bewusst außerhalb der Versicherungsbranche. Zum Beispiel: Softwareberatung für kleine Unternehmen der Baufinanzierung, von der Anforderung bis zur Umsetzung, als einziger technischer Ansprechpartner.</p>
+          <div class="tags"><span>CFScript</span><span>jQuery</span><span>Bootstrap</span><span>PostgreSQL</span></div>
+        </div></div>
+      </details>
+      <div class="gx-row"><span class="gx">|/</span></div>
+
+      <details class="gl">
+        <summary><span class="gr">| *</span><span class="ln"><span class="hs">6f1d2aa</span><span class="rf">(study)</span><span class="dt">2022-02</span><span class="tt" data-en="B.Sc. Software Development · IU">B.Sc. Softwareentwicklung · IU</span></span></summary>
+        <div class="show"><span class="rail">| |</span><div class="body">
+          <div class="kv" data-en="Date: 02/2022 → ~05/2027 · part-time distance learning">Date: 02/2022 → ~05/2027 · berufsbegleitendes Fernstudium</div>
+          <p data-en="Average grade 1.9 (German scale). Modules include DevOps, CI/CD, infrastructure as code with Terraform, and AWS.">Notenschnitt 1,9. Module u. a. DevOps, CI/CD, Infrastructure as Code mit Terraform und AWS.</p>
+        </div></div>
+      </details>
+      <div class="gx-row"><span class="gx">|/</span></div>
+
+      <details class="gl">
+        <summary><span class="gr">*</span><span class="ln"><span class="hs">2b44c90</span><span class="dt">2022-01</span><span class="tt">Software Developer · ePension (Hypoport SE)</span></span></summary>
+        <div class="show"><span class="rail">|</span><div class="body">
+          <div class="kv" data-en="Date: 01/2022 → 09/2023 · part-time">Date: 01/2022 → 09/2023 · Teilzeit</div>
+          <p data-en="Portal features for one of Germany's leading InsurTech platforms for occupational pensions and health benefits, used by insurers, brokers and employers. Systems delivered end to end, including a third-party application with CRM integration in an ISO/IEC 27001 certified environment.">Portal-Features für eine der führenden deutschen InsurTech-Plattformen für betriebliche Altersvorsorge und Krankenversicherung, genutzt von Versicherern, Maklern und Arbeitgebern. Systeme end-to-end umgesetzt, darunter eine Drittanbieter-Anwendung mit CRM-Integration im ISO/IEC-27001-zertifizierten Umfeld.</p>
+          <div class="tags"><span>Vue.js</span><span>jQuery</span><span>CFWheels</span><span>PostgreSQL</span></div>
+        </div></div>
+      </details>
+
+      <details class="gl">
+        <summary><span class="gr">*</span><span class="ln"><span class="hs">e3a0d71</span><span class="rf">(tag: v1.0)</span><span class="dt">2019-10</span><span class="tt" data-en="Apprenticeship, IT specialist for application development · ePension">Ausbildung Fachinformatiker Anwendungsentwicklung · ePension</span></span></summary>
+        <div class="show"><span class="rail"> </span><div class="body">
+          <div class="kv">Date: 10/2019 → 01/2022</div>
+          <p data-en="Apprenticeship at ePension in Überlingen, vocational school in Constance. First contributions to the production portal software.">Ausbildung bei ePension in Überlingen, Berufsschule in Konstanz. Erste Mitarbeit an der produktiven Portal-Software.</p>
+        </div></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="stack">
+  <div class="wrap">
+    <div class="h"><h2>Stack</h2><span class="cmd">dotnet list package</span></div>
+    <table class="sr" data-ascii>
+      <thead><tr><th data-en="AREA">BEREICH</th><th data-en="TECHNOLOGY">TECHNOLOGIE</th></tr></thead>
+      <tbody>
+        <tr><td>backend</td><td>C#, ASP.NET Core, Entity Framework Core</td></tr>
+        <tr><td>frontend</td><td>Blazor</td></tr>
+        <tr><td data-en="data">daten</td><td>PostgreSQL</td></tr>
+        <tr><td data-en="architecture">architektur</td><td>Domain-Driven Design, Modular Monolith, Microservices</td></tr>
+        <tr><td>testing</td><td>xUnit, NSubstitute, Playwright</td></tr>
+        <tr><td>ops</td><td>Docker, Kubernetes, Rancher</td></tr>
+        <tr><td>ai-assisted dev</td><td>GitHub Copilot, Claude Code</td></tr>
+      </tbody>
+    </table>
+    <pre class="ascii" aria-hidden="true"></pre>
+    <div class="extra">
+      <div><b>certs</b>   IBM AI Developer Professional Certificate (2024) · iSAQB Advanced, Domain-Driven Design (2024)</div>
+      <div><b>locale</b>  <span data-en="German (native) · English (fluent) · Spanish (A1)">Deutsch (Muttersprache) · Englisch (fließend) · Spanisch (A1)</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="kontakt">
+  <div class="wrap">
+    <div class="h"><h2 data-en="Contact">Kontakt</h2><span class="cmd">mail</span></div>
+    <div class="mail"><a href="mailto:hello@benedikthering.me">hello@benedikthering.me</a></div>
+    <div class="cta">
+      <button class="br solid" id="copyBtn" type="button" data-en="copy address">adresse kopieren</button>
+      <a class="br" href="https://www.linkedin.com/in/benedikt-magnus-hering-302bb816a" target="_blank" rel="noopener">linkedin ↗</a>
+    </div>
+    <div class="clines">
+      <div>loc  <b>Stuttgart, Germany · remote</b></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>© <span class="yr">2026</span> Benedikt Magnus Hering</span><span data-en="no cookies · no tracking">keine cookies · kein tracking</span>
+    <span><a class="br" href="impressum.html" data-en="legal">impressum</a> <a class="br" href="datenschutz.html" data-en="privacy">datenschutz</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var lang = "de";
+  var MAIL = "hello@benedikthering.me";
+
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function charWidth(el){
+    var s = document.createElement("span");
+    s.textContent = "0000000000";
+    s.style.cssText = "position:absolute;visibility:hidden;white-space:pre";
+    el.appendChild(s);
+    var w = s.getBoundingClientRect().width / 10;
+    s.remove();
+    return w || 8;
+  }
+
+  /* ---------- ASCII-Tabelle aus versteckter <table> ---------- */
+  function wrapText(text, w){
+    var words = text.split(/\s+/).filter(Boolean), lines = [], cur = "";
+    words.forEach(function(word){
+      while(word.length > w){ if(cur){lines.push(cur);cur="";} lines.push(word.slice(0,w)); word = word.slice(w); }
+      if(!cur) cur = word;
+      else if((cur + " " + word).length <= w) cur += " " + word;
+      else { lines.push(cur); cur = word; }
+    });
+    if(cur || !lines.length) lines.push(cur);
+    return lines;
+  }
+  function renderAscii(tbl){
+    var pre = tbl.nextElementSibling;
+    if(!pre || !pre.classList.contains("ascii")) return;
+    var rows = Array.prototype.map.call(tbl.rows, function(r){
+      return Array.prototype.map.call(r.cells, function(c){ return c.textContent.trim().replace(/\s+/g," "); });
+    });
+    var head = !!tbl.tHead, n = rows[0].length;
+    var avail = Math.max(24, Math.floor(pre.clientWidth / charWidth(pre)) - 1);
+    var widths = [];
+    for(var i=0;i<n;i++){ widths[i] = Math.max.apply(null, rows.map(function(r){ return (r[i]||"").length; })); }
+    var total = widths.reduce(function(a,b){return a+b;},0) + 3*n + 1;
+    while(total > avail){
+      var idx=-1, max=0;
+      widths.forEach(function(w,j){ if(w > max && w > 5){ max = w; idx = j; } });
+      if(idx < 0) break;
+      widths[idx]--; total--;
+    }
+    var sep = "+" + widths.map(function(w){ return "-".repeat(w+2); }).join("+") + "+";
+    var out = [esc(sep)];
+    rows.forEach(function(r, ri){
+      var cells = r.map(function(c,j){ return wrapText(c, widths[j]); });
+      var h = Math.max.apply(null, cells.map(function(c){ return c.length; }));
+      for(var l=0;l<h;l++){
+        var line = esc("| " + cells.map(function(c,j){ return (c[l]||"").padEnd(widths[j]); }).join(" | ") + " |");
+        if(ri === 0 && head) line = '<span class="hd">' + line + "</span>";
+        else line = line.replace(/\b(stable|preview)\b/g, '<span class="st-$1">$1</span>');
+        out.push(line);
+      }
+      if(ri === 0 && head) out.push(esc(sep.replace(/-/g,"=")));
+    });
+    out.push(esc(sep));
+    pre.innerHTML = out.join("\n");
+  }
+  function renderTables(){ document.querySelectorAll("table[data-ascii]").forEach(renderAscii); }
+
+  /* ---------- Shell ---------- */
+  var out = document.getElementById("out"), input = document.getElementById("cmd");
+
+  var T = {
+    de:{
+      info:[
+        ["Rolle","Software Engineer, festangestellt"],
+        ["Freelance","kleine & mittlere Projekte, remote"],
+        ["Erfahrung","7 Jahre, seit 10/2019"],
+        ["Domäne","Versicherung & InsurTech"],
+        ["Kern","C#, ASP.NET Core, Blazor"],
+        ["Betrieb","Docker, Kubernetes, Rancher"],
+        ["Studium","B.Sc. Softwareentwicklung, IU"],
+        ["Status","● offen für Projekte"]
+      ],
+      tip:"Tipp: 'services' zeigt, was ich anbiete. 'help' zeigt alle Befehle.",
+      help:"Befehle:\n  services   was ich anbiete\n  process    wie die Zusammenarbeit läuft\n  stack      womit ich arbeite\n  contact    wie du mich erreichst\n  neofetch   die Übersicht von oben\n  git log    zum Werdegang springen\n  lang en    switch to english\n  clear      Ausgabe leeren",
+      services:"Neben meiner Festanstellung: kleine & mittlere Projekte, remote.\n\n  → technische Beratung & Konzeption\n  → Webanwendungen mit .NET und Blazor\n  → Modernisierung bestehender Software\n  → APIs & Schnittstellen\n  → Docker & Deployment\n  → Websites\n\nNicht im Angebot: Projekte aus der Versicherungsbranche.\nAnfragen: 'contact'",
+      process:"1. Anfrage     kurze Mail, worum es geht\n2. Call        30 min, remote, unverbindlich\n3. Angebot     Festpreis oder nach Aufwand\n4. Umsetzung   remote, mit regelmäßigen Updates\n5. Übergabe    Code, Doku, kurze Einweisung\n\nVerfügbarkeit: abends & am Wochenende\nAntwort:       innerhalb von 1–2 Werktagen\n\nLos geht's mit 'contact'",
+      stack:"backend  : C#, ASP.NET Core, EF Core\nfrontend : Blazor\ndaten    : PostgreSQL\narch     : DDD, Modular Monolith, Microservices\nops      : Docker, Kubernetes, Rancher\nai       : GitHub Copilot, Claude Code",
+      contact:"mail : " + MAIL + "\nweb  : linkedin.com/in/benedikt-magnus-hering-302bb816a",
+      jump:"→ springe zu ~/werdegang",
+      sudo:"[sudo] Passwort für guest: ********\nOkay. Erzähl mir von deinem Projekt: " + MAIL,
+      hire:"Festanstellung: belegt, und das bleibt auch so.\nFür Projekte nebenher: 'services'",
+      rm:"Netter Versuch. Dieses Dateisystem ist schreibgeschützt.",
+      exit:"Hier gibt es keinen Ausgang. Nur 'contact'.",
+      coffee:"HTTP 418: Ich bin eine Teekanne.",
+      nf:function(c){ return "zsh: command not found: " + c + "\nTipp: 'help'"; }
+    },
+    en:{
+      info:[
+        ["Role","Software Engineer, full-time"],
+        ["Freelance","small & mid-sized projects, remote"],
+        ["Experience","7 years, since 10/2019"],
+        ["Domain","insurance & InsurTech"],
+        ["Core","C#, ASP.NET Core, Blazor"],
+        ["Ops","Docker, Kubernetes, Rancher"],
+        ["Study","B.Sc. Software Development, IU"],
+        ["Status","● open for projects"]
+      ],
+      tip:"Tip: 'services' shows what I offer. 'help' lists all commands.",
+      help:"commands:\n  services   what I offer\n  process    how working together works\n  stack      what I work with\n  contact    how to reach me\n  neofetch   the overview from above\n  git log    jump to career\n  lang de    auf deutsch wechseln\n  clear      clear output",
+      services:"Alongside my full-time job: small & mid-sized projects, remote.\n\n  → technical consulting & concepts\n  → web applications with .NET and Blazor\n  → modernising existing software\n  → APIs & integrations\n  → Docker & deployment\n  → websites\n\nNot offered: projects in the insurance industry.\nEnquiries: 'contact'",
+      process:"1. Enquiry     a short mail about your project\n2. Call        30 min, remote, no obligation\n3. Quote       fixed price or time-based\n4. Delivery    remote, with regular updates\n5. Handover    code, docs, short walkthrough\n\nAvailability:  evenings & weekends\nReply:         within 1–2 business days\n\nStart with 'contact'",
+      stack:"backend  : C#, ASP.NET Core, EF Core\nfrontend : Blazor\ndata     : PostgreSQL\narch     : DDD, Modular Monolith, Microservices\nops      : Docker, Kubernetes, Rancher\nai       : GitHub Copilot, Claude Code",
+      contact:"mail : " + MAIL + "\nweb  : linkedin.com/in/benedikt-magnus-hering-302bb816a",
+      jump:"→ jumping to ~/career",
+      sudo:"[sudo] password for guest: ********\nOkay. Tell me about your project: " + MAIL,
+      hire:"Full-time position: taken, and staying that way.\nFor projects on the side: 'services'",
+      rm:"Nice try. This filesystem is read-only.",
+      exit:"There is no exit. Only 'contact'.",
+      coffee:"HTTP 418: I'm a teapot.",
+      nf:function(c){ return "zsh: command not found: " + c + "\nhint: 'help'"; }
+    }
+  };
+  var COMMANDS = ["services","process","stack","contact","neofetch","whoami","git log","help","clear","lang en","lang de"];
+
+  function line(html, cls){
+    var d = document.createElement("div");
+    if(cls) d.className = cls;
+    d.innerHTML = html;
+    out.appendChild(d);
+    return d;
+  }
+  function print(text, cls){ line(esc(text), cls); out.scrollTop = out.scrollHeight; }
+  function neofetch(){
+    var t = T[lang], cols = Math.floor(out.clientWidth / charWidth(out)) - 4;
+    var title = "benedikt@stuttgart", rule = "-".repeat(title.length);
+    var keyW = Math.max.apply(null, t.info.map(function(r){ return r[0].length; })) + 1;
+    var info = ['<span class="b">' + title + '</span>', '<span class="d">' + rule + '</span>'].concat(
+      t.info.map(function(r){
+        var v = esc(r[1]).replace("●", '<span class="ok">●</span>');
+        return '<span class="b">' + esc((r[0] + ":").padEnd(keyW + 1)) + '</span>' + v;
+      })
+    );
+    var html = info.join("\n"), stacked = cols < Math.max.apply(null, t.info.map(function(r){ return r[1].length + keyW + 1; }));
+    line(html, stacked ? "nf stack" : "nf");
+    line("");
+    print(t.tip, "d");
+  }
+  function run(raw, quiet){
+    var c = raw.trim(), t = T[lang];
+    if(!quiet) print("guest@benedikt:~$ " + c, "b");
+    if(!c) return;
+    var k = c.toLowerCase();
+    if(k === "clear"){ out.innerHTML = ""; return; }
+    if(k === "neofetch" || k === "whoami") return neofetch();
+    if(k === "help" || k === "?") return print(t.help);
+    if(k === "services" || k === "angebot") return print(t.services);
+    if(k === "process" || k === "prozess") return print(t.process);
+    if(k === "projects" || k === "ls"){ print(t.jump, "d"); document.getElementById("log").scrollIntoView(); return; }
+    if(k === "stack") return print(t.stack);
+    if(k === "contact" || k === "mail") return print(t.contact);
+    if(k.indexOf("git") === 0){ print(t.jump, "d"); document.getElementById("log").scrollIntoView(); return; }
+    if(k.indexOf("hire") !== -1) return print(t.hire);
+    if(k.indexOf("sudo") === 0) return print(t.sudo);
+    if(k.indexOf("rm ") === 0) return print(t.rm);
+    if(k === "exit" || k === "quit" || k === ":q" || k === ":wq") return print(t.exit);
+    if(k === "coffee") return print(t.coffee);
+    if(k === "lang en" || k === "lang de"){ setLang(k.slice(5)); return; }
+    print(t.nf(c.split(" ")[0]));
+  }
+  function boot(){
+    out.innerHTML = "";
+    print("guest@benedikt:~$ neofetch", "b");
+    neofetch();
+    out.scrollTop = 0;
+  }
+
+  var hist = [], hi = 0;
+  document.getElementById("shellForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var v = input.value;
+    if(!v.trim()){ runChip(); return; }
+    hist.push(v);
+    hi = hist.length;
+    run(v); input.value = "";
+  });
+  input.addEventListener("keydown", function(e){
+    if(!input.value && (e.key === "ArrowLeft" || e.key === "ArrowRight")){ e.preventDefault(); select(sel + (e.key === "ArrowRight" ? 1 : -1)); return; }
+    if(e.key === "ArrowUp" && hist.length){ e.preventDefault(); hi = Math.max(0, hi - 1); input.value = hist[hi]; }
+    else if(e.key === "ArrowDown" && hist.length){ e.preventDefault(); hi = Math.min(hist.length, hi + 1); input.value = hist[hi] || ""; }
+    else if(e.key === "Tab"){
+      var v = input.value.toLowerCase();
+      if(!v) return;
+      var m = COMMANDS.filter(function(c){ return c.indexOf(v) === 0; });
+      if(m.length){ e.preventDefault(); if(m.length === 1) input.value = m[0]; else print(m.join("   "), "d"); }
+    }
+  });
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".chips [data-cmd]")), sel = 0;
+  function select(i){
+    sel = (i + chips.length) % chips.length;
+    chips.forEach(function(c, j){ c.classList.toggle("sel", j === sel); c.setAttribute("aria-pressed", j === sel ? "true" : "false"); });
+  }
+  function runChip(){ run(chips[sel].getAttribute("data-cmd")); out.scrollTop = out.scrollHeight; }
+  chips.forEach(function(b, j){ b.addEventListener("click", function(){ select(j); runChip(); }); });
+  select(0);
+  function shellVisible(){ var r = document.getElementById("shell").getBoundingClientRect(); return r.top < window.innerHeight && r.bottom > 0; }
+  document.addEventListener("keydown", function(e){
+    var a = document.activeElement;
+    var free = !a || a === document.body || a === document.documentElement;
+    if(free && shellVisible() && (e.key === "ArrowLeft" || e.key === "ArrowRight")){ e.preventDefault(); select(sel + (e.key === "ArrowRight" ? 1 : -1)); return; }
+    if(free && shellVisible() && e.key === "Enter"){ e.preventDefault(); runChip(); return; }
+    if(e.key === "/" && a !== input && !/INPUT|TEXTAREA/.test(a.tagName)){
+      e.preventDefault(); document.getElementById("shell").scrollIntoView({block:"center"}); input.focus({preventScroll:true});
+    }
+  });
+
+  /* ---------- Sprache ---------- */
+  function setLang(l){
+    lang = l === "en" ? "en" : "de";
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-en]").forEach(function(el){
+      if(el.dataset.de == null) el.dataset.de = el.innerHTML;
+      el.innerHTML = lang === "en" ? el.dataset.en.replace(/&(?!amp;|lt;|gt;)/g,"&amp;") : el.dataset.de;
+    });
+    var b = document.getElementById("langBtn");
+    b.textContent = lang === "en" ? "DE" : "EN";
+    b.setAttribute("aria-label", lang === "en" ? "Auf Deutsch wechseln" : "Switch to English");
+    try{ localStorage.setItem("bh-lang", lang); }catch(e){}
+    renderTables();
+    boot();
+  }
+  document.getElementById("langBtn").addEventListener("click", function(){ setLang(lang === "en" ? "de" : "en"); });
+
+  /* ---------- Mail kopieren ---------- */
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var btn = this, prev = btn.innerHTML;
+    function done(ok){
+      btn.textContent = ok ? (lang === "en" ? "copied" : "kopiert") : MAIL;
+      setTimeout(function(){ btn.innerHTML = prev; }, 1600);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(MAIL).then(function(){ done(true); }, function(){ done(false); });
+    } else done(false);
+  });
+
+  /* ---------- Start ---------- */
+  var saved = null;
+  try{ saved = localStorage.getItem("bh-lang"); }catch(e){}
+  if(saved !== "de" && saved !== "en") saved = "de";
+  setLang(saved);
+  var rt, lastW = window.innerWidth;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ renderTables(); if(Math.abs(window.innerWidth - lastW) > 80){ lastW = window.innerWidth; boot(); } }, 150);
+  });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ renderTables(); boot(); });
+})();
+</script>
+<script>document.querySelectorAll(".yr").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
+</body>
+</html>

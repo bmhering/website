@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Impressum — Benedikt Hering</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23111113'/%3E%3Cpolyline points='14,20 27,32 14,44' fill='none' stroke='%23f5f5f2' stroke-width='6' stroke-linecap='square'/%3E%3Crect x='32' y='40' width='20' height='6' fill='%23f5f5f2'/%3E%3C/svg%3E">
+<style>
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:700;font-display:swap;src:url(fonts/ibm-plex-mono-latin-700-normal.woff2) format("woff2")}
+:root{--bg:#111113;--bg-2:#18181b;--fg:#c9c8c3;--bright:#f5f5f2;--dim:#7d7c78;--line:#2a2a2f;--mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:14.5px;line-height:1.7}
+a{color:var(--bright)}
+::selection{background:var(--bright);color:var(--bg)}
+:focus-visible{outline:2px solid var(--bright);outline-offset:2px}
+.wrap{max-width:920px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{border-bottom:1px dashed var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-block:12px}
+.mark{font-weight:700;font-size:14px;letter-spacing:.08em;text-decoration:none;color:var(--bright)}
+.mark span{display:inline-block;width:.6em;height:1.1em;background:var(--bright);vertical-align:-.18em;margin-left:2px}
+.br{font-size:13px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;color:var(--fg)}
+.br::before{content:"[ ";color:var(--dim)} .br::after{content:" ]";color:var(--dim)}
+.br:hover{color:var(--bright)}
+main{padding-block:56px 40px}
+.cmd{font-size:13px;color:var(--dim)} .cmd::before{content:"$ "}
+h1{color:var(--bright);font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;letter-spacing:-.02em;margin:10px 0 36px}
+h2{color:var(--bright);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin:36px 0 10px}
+p,ul{max-width:68ch;margin-bottom:12px}
+ul{list-style:none}
+ul li::before{content:"→ ";color:var(--dim)}
+.muted{color:var(--dim);font-size:13px;margin-top:40px}
+footer{border-top:1px dashed var(--line);margin-top:40px}
+footer .wrap{display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;padding-block:20px;font-size:12.5px;color:var(--dim)}
+footer .br{font-size:12px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="mark" href="index.html">BENEDIKT.HERING<span></span></a><a class="br" href="index.html">← zurück</a></div></header>
+<main><div class="wrap">
+  <div class="cmd">cat impressum.txt</div>
+  <h1>Impressum</h1>
+
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p>Benedikt Magnus Hering<br>
+  Benedikt Hering Softwareentwicklung<br>
+  Sickstr. 84<br>
+  70190 Stuttgart<br>
+  Deutschland</p>
+
+  <h2>Kontakt</h2>
+  <p>Telefon: <a href="tel:+491743445874">+49 174 3445874</a><br>
+  E-Mail: <a href="mailto:hello@benedikthering.me">hello@benedikthering.me</a></p>
+
+  <!-- AB DEZEMBER 2026 PFLICHT: Wirtschafts-Identifikationsnummer eintragen (oder USt-IdNr., falls vorhanden).
+       Kommentarzeichen entfernen und Nummer einsetzen, KEINE Platzhalter online stellen:
+  <h2>Wirtschafts-Identifikationsnummer</h2>
+  <p>Wirtschafts-Identifikationsnummer gemäß § 139c AO: DE XXXXXXXXX-00001</p>
+  -->
+
+  <h2>Verbraucherstreitbeilegung</h2>
+  <p>Ich bin nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+</div></main>
+<footer><div class="wrap"><span>© <span class="yr">2026</span> Benedikt Magnus Hering</span><span>keine cookies · kein tracking</span><span><a class="br" href="impressum.html">impressum</a> <a class="br" href="datenschutz.html">datenschutz</a></span></div></footer>
+<script>document.querySelectorAll(".yr").forEach(function(e){e.textContent=new Date().getFullYear();});</script>
+</body>
+</html>
